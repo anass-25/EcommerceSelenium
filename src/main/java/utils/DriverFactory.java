@@ -18,7 +18,8 @@ public class DriverFactory {
 
             ChromeOptions options = new ChromeOptions();
 
-            // GitHub Actions utilise Linux
+            // Windows : navigateur normal
+            // Linux : navigateur sans interface graphique
             String os = System.getProperty("os.name").toLowerCase();
 
             if (os.contains("linux")) {
@@ -41,7 +42,6 @@ public class DriverFactory {
     }
 
     public static void quitDriver() {
-
         if (driver != null) {
             driver.quit();
             driver = null;
