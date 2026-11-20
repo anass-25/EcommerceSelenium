@@ -18,16 +18,26 @@ public class DriverFactory {
 
             ChromeOptions options = new ChromeOptions();
 
-            // Configuration pour GitHub Actions
-            if ("true".equals(System.getenv("GITHUB_ACTIONS"))) {
+            // Vérifier l'environnement GitHub Actions
+            String githubActions = System.getenv("GITHUB_ACTIONS");
+
+            System.out.println("GITHUB_ACTIONS = " + githubActions);
+
+            // Configuration Chrome pour GitHub Actions
+            if ("true".equalsIgnoreCase(githubActions)) {
 
                 options.addArguments("--headless=new");
                 options.addArguments("--no-sandbox");
                 options.addArguments("--disable-dev-shm-usage");
                 options.addArguments("--disable-gpu");
                 options.addArguments("--window-size=1920,1080");
+
             }
 
+            // Afficher les options utilisées
+            System.out.println("Chrome options = " + options.asMap());
+
+            // Démarrer Chrome
             driver = new ChromeDriver(options);
 
             driver.manage().window().maximize();
