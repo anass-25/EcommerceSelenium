@@ -40,3 +40,10 @@ allure-report/
 # Operating systems
 .DS_Store
 Thumbs.db
+
+# Selenium screenshots
+screenshots/
+ScreenShots/
+
+# GitHub Actions diagnostic screenshots
+target/screenshots/
