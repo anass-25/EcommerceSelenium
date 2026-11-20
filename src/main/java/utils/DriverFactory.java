@@ -18,23 +18,30 @@ public class DriverFactory {
 
             ChromeOptions options = new ChromeOptions();
 
-            // Windows : navigateur normal
-            // Linux : navigateur sans interface graphique
-            String os = System.getProperty("os.name").toLowerCase();
+            // Détecter GitHub Actions
+            String githubActions = System.getenv("GITHUB_ACTIONS");
 
-            if (os.contains("linux")) {
+            if ("true".equalsIgnoreCase(githubActions)) {
+
+                // Chrome sans interface graphique
                 options.addArguments("--headless=new");
-                options.addArguments("--no-sandbox");
-                options.addArguments("--disable-dev-shm-usage");
+
+                // Taille de fenêtre fixe
                 options.addArguments("--window-size=1920,1080");
+
+                options.addArguments("--disable-gpu");
             }
 
-            System.out.println("OS = " + os);
+            System.out.println("GitHub Actions = " + githubActions);
             System.out.println("Chrome options = " + options.asMap());
 
             driver = new ChromeDriver(options);
 
-            driver.manage().window().maximize();
+            // Agrandir la fenêtre uniquement en local
+            if (!"true".equalsIgnoreCase(githubActions)) {
+                driver.manage().window().maximize();
+            }
+
             driver.manage().deleteAllCookies();
         }
 
@@ -42,6 +49,7 @@ public class DriverFactory {
     }
 
     public static void quitDriver() {
+
         if (driver != null) {
             driver.quit();
             driver = null;
