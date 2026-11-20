@@ -18,12 +18,13 @@ public class DriverFactory {
 
             ChromeOptions options = new ChromeOptions();
 
-            // GitHub Actions : exécution sans interface graphique
+            // Configuration pour GitHub Actions
             if ("true".equals(System.getenv("GITHUB_ACTIONS"))) {
 
                 options.addArguments("--headless=new");
                 options.addArguments("--no-sandbox");
                 options.addArguments("--disable-dev-shm-usage");
+                options.addArguments("--disable-gpu");
                 options.addArguments("--window-size=1920,1080");
             }
 
